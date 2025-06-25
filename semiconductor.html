@@ -98,9 +98,9 @@
                 </div>
                 <div class="bg-slate-800 rounded-2xl shadow-xl p-6 md:p-8">
                     <h3 class="text-xl font-semibold text-white mb-4">Outsized Impact of AI Accelerators</h3>
-                     <p class="text-slate-400 text-sm mb-4">A tiny fraction of total wafers, these high-value chips are responsible for a massive share of total industry revenue.</p>
+                     <p class="text-slate-400 text-sm mb-4">This chart compares the tiny wafer share of AI accelerators to their massive contribution to total industry revenue, highlighting their strategic importance.</p>
                      <div class="chart-container">
-                        <canvas id="aiWaferImpactChart"></canvas>
+                        <canvas id="aiImpactComparisonChart"></canvas>
                     </div>
                 </div>
                  <div class="kpi-card rounded-2xl p-8 text-center flex flex-col justify-center items-center">
@@ -368,14 +368,73 @@
                 return lines;
             };
 
+            // Chart initializations
             const marketForecastCtx = document.getElementById('marketForecastChart')?.getContext('2d');
             if(marketForecastCtx) new Chart(marketForecastCtx, { type: 'line', data: { labels: ['2024', '2030', '2040 (Low)', '2040 (High)'], datasets: [{ label: 'Market Revenue ($B)', data: [627, 1000, 1700, 2400], borderColor: CHART_COLORS.blue, backgroundColor: 'rgba(0, 161, 228, 0.1)', fill: true, tension: 0.4 }] }, options: commonChartOptions });
             
             const revenueVsWafersCtx = document.getElementById('revenueVsWafersChart')?.getContext('2d');
-            if(revenueVsWafersCtx) new Chart(revenueVsWafersCtx, { type: 'bar', data: { labels: ['Chip Revenue Growth', 'Wafer Shipment Growth'], datasets: [{ label: '2024 YoY Growth (%)', data: [19, -2.4], backgroundColor: [CHART_COLORS.blue, CHART_COLORS.grey] }] }, options: {...commonChartOptions, indexAxis: 'y' } });
+            if(revenueVsWafersCtx) {
+                new Chart(revenueVsWafersCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Chip Revenue Growth', 'Wafer Shipment Growth'],
+                        datasets: [{
+                            label: '2024 YoY Growth',
+                            data: [19, -2.4],
+                            backgroundColor: [CHART_COLORS.blue, CHART_COLORS.grey]
+                        }]
+                    },
+                    options: {
+                        ...commonChartOptions,
+                        scales: {
+                            y: {
+                                ...commonChartOptions.scales.y,
+                                title: { display: true, text: 'Percentage Growth (%)', color: CHART_COLORS.lightGrey }
+                            }
+                        }
+                    }
+                });
+            }
 
-            const aiWaferImpactCtx = document.getElementById('aiWaferImpactChart')?.getContext('2d');
-            if(aiWaferImpactCtx) new Chart(aiWaferImpactCtx, { type: 'doughnut', data: { labels: ['AI Wafer Share', 'Rest of Wafers'], datasets: [{ data: [0.2, 99.8], backgroundColor: [CHART_COLORS.blue, '#334155'], borderWidth: 0 }] }, options: {...commonChartOptions, plugins: {...commonChartOptions.plugins, legend: { display: false }}, cutout: '70%'} });
+            const aiImpactComparisonCtx = document.getElementById('aiImpactComparisonChart')?.getContext('2d');
+            if(aiImpactComparisonCtx) {
+                new Chart(aiImpactComparisonCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Share of Revenue', 'Share of Wafers'],
+                        datasets: [{
+                            label: 'AI Accelerator Impact (%)',
+                            data: [20, 0.2],
+                            backgroundColor: [CHART_COLORS.blue, CHART_COLORS.grey]
+                        }]
+                    },
+                    options: {
+                        ...commonChartOptions,
+                        plugins: {
+                            ...commonChartOptions.plugins,
+                            legend: { display: false }
+                        },
+                        scales: {
+                            y: {
+                                type: 'logarithmic',
+                                title: { display: true, text: 'Percentage of Industry Total (Log Scale)', color: CHART_COLORS.lightGrey },
+                                ticks: {
+                                    color: CHART_COLORS.grey,
+                                    callback: function(value, index, values) {
+                                        if (value === 100 || value === 10 || value === 1 || value === 0.1) {
+                                            return value + '%';
+                                        }
+                                        if (value === 20 || value === 0.2) {
+                                            return value + '%';
+                                        }
+                                        return null;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
 
             const aiChipMarketCtx = document.getElementById('aiChipMarketChart')?.getContext('2d');
             if(aiChipMarketCtx) new Chart(aiChipMarketCtx, { type: 'bar', data: { labels: ['Forecast 1', 'Forecast 2', 'Forecast 3'], datasets: [{ label: 'AI Chip Market Size by 2030 ($B)', data: [227, 281, 453], backgroundColor: [CHART_COLORS.darkerBlue, CHART_COLORS.darkBlue, CHART_COLORS.blue] }] }, options: commonChartOptions });
