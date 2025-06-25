@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Semiconductor Industry Presentation (2025–2040)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0F172A;
+            color: #E2E8F0;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            height: 320px;
+            max-height: 400px;
+        }
+        @media (min-width: 640px) { .chart-container { height: 384px; } }
+        .kpi-card {
+            background-color: #1E293B;
+            border: 1px solid #334155;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .kpi-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 161, 228, 0.1), 0 4px 6px -2px rgba(0, 161, 228, 0.05);
+        }
+        .text-accent { color: #00A1E4; }
+        .bg-accent { background-color: #00A1E4; }
+        .border-accent { border-color: #00A1E4; }
+        
+        .timeline { position: relative; padding: 2rem 0; }
+        .timeline::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 4px; background-color: #334155; transform: translateX(-50%); }
+        .timeline-item { position: relative; width: 50%; padding: 1rem 2rem; }
+        .timeline-item:nth-child(odd) { left: 0; }
+        .timeline-item:nth-child(even) { left: 50%; }
+        .timeline-item::after { content: ''; position: absolute; top: 1.5rem; width: 25px; height: 25px; background-color: #00A1E4; border: 4px solid #0F172A; border-radius: 50%; z-index: 1; }
+        .timeline-item:nth-child(odd)::after { right: -12.5px; }
+        .timeline-item:nth-child(even)::after { left: -12.5px; }
+        .timeline-content { padding: 1.5rem; background-color: #1E293B; border-radius: 0.5rem; border: 1px solid #334155; }
+
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 0.75rem 1rem; text-align: left; border-bottom: 1px solid #334155; }
+        th { background-color: #1E293B; font-weight: 600; }
+        tbody tr:hover { background-color: #1E293B; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <nav class="sticky top-0 z-50 bg-slate-900/80 backdrop-blur-sm border-b border-slate-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0 text-white font-bold text-lg">Semiconductor Outlook</div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#overview" class="text-slate-300 hover:bg-slate-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Overview</a>
+                        <a href="#megatrends" class="text-slate-300 hover:bg-slate-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Megatrends</a>
+                        <a href="#segments" class="text-slate-300 hover:bg-slate-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Segments</a>
+                        <a href="#geopolitics" class="text-slate-300 hover:bg-slate-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Geopolitics</a>
+                        <a href="#talent" class="text-slate-300 hover:bg-slate-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Talent</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <header class="py-16 md:py-24 text-center bg-slate-900">
+        <div class="max-w-4xl mx-auto px-4">
+            <h1 class="text-4xl md:text-6xl font-black tracking-tight text-white">The Next <span class="text-accent">Trillion-Dollar</span> Era</h1>
+            <p class="mt-4 text-lg md:text-xl text-slate-300">A Comprehensive Visualization of the Global Semiconductor Industry's Growth Trajectory from 2025 to 2040</p>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24 md:space-y-32 pb-24 pt-16">
+        
+        <section id="overview">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-white">Industry Overview: A Historic Inflection Point</h2>
+            <p class="mt-4 max-w-3xl mx-auto text-center text-slate-300">The industry is in a structural super-cycle, driven not by unit volume but by value and complexity. Advanced chips for AI and automotive are creating outsized revenue growth, fundamentally changing how the industry's health is measured.</p>
+            <div class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-3 bg-slate-800 rounded-2xl shadow-2xl p-6 md:p-8">
+                     <h3 class="text-xl font-semibold text-center text-white mb-4">Global Semiconductor Revenue Forecast (USD Billions)</h3>
+                     <div class="chart-container">
+                        <canvas id="marketForecastChart"></canvas>
+                    </div>
+                </div>
+                <div class="bg-slate-800 rounded-2xl shadow-xl p-6 md:p-8">
+                    <h3 class="text-xl font-semibold text-white mb-4">The New Growth Paradigm (2024)</h3>
+                    <p class="text-slate-400 text-sm mb-4">A key indicator of the industry's shift from volume to value is the divergence between revenue growth and silicon wafer shipments.</p>
+                    <div class="chart-container">
+                        <canvas id="revenueVsWafersChart"></canvas>
+                    </div>
+                </div>
+                <div class="bg-slate-800 rounded-2xl shadow-xl p-6 md:p-8">
+                    <h3 class="text-xl font-semibold text-white mb-4">Outsized Impact of AI Accelerators</h3>
+                     <p class="text-slate-400 text-sm mb-4">A tiny fraction of total wafers, these high-value chips are responsible for a massive share of total industry revenue.</p>
+                     <div class="chart-container">
+                        <canvas id="aiWaferImpactChart"></canvas>
+                    </div>
+                </div>
+                 <div class="kpi-card rounded-2xl p-8 text-center flex flex-col justify-center items-center">
+                    <p class="text-sm text-slate-400">Market Cap Surge (2022-2024)</p>
+                    <p class="text-6xl font-black text-accent mt-2">+235%</p>
+                    <p class="mt-2 text-slate-300">Combined market capitalization increase for the top 10 semiconductor firms, signaling immense investor confidence.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="megatrends">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-white">Five Megatrends Reshaping the Industry</h2>
+             <p class="mt-4 max-w-3xl mx-auto text-center text-slate-300">A series of powerful, interlocking forces are driving structural transformation, redefining the technological frontier, the geopolitical landscape, and the architecture of computing.</p>
+            <div class="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div class="bg-slate-800 rounded-2xl shadow-xl p-6 md:p-8">
+                    <h3 class="text-2xl font-bold text-white">1. The AI Compute Explosion</h3>
+                    <p class="mt-2 text-slate-300">Generative AI has ignited explosive demand. This chart visualizes the wide range of forecasts, highlighting the massive potential and uncertainty in the AI chip market.</p>
+                    <div class="mt-6 chart-container">
+                        <canvas id="aiChipMarketChart"></canvas>
+                    </div>
+                </div>
+                <div class="bg-slate-800 rounded-2xl shadow-xl p-6 md:p-8">
+                     <h3 class="text-2xl font-bold text-white">2. Automotive: The Rolling Data Center</h3>
+                    <p class="mt-2 text-slate-300">The shift to EVs and autonomous features is dramatically increasing chip content per vehicle, with a modern EV requiring 2-3x more semiconductor value.</p>
+                     <div class="mt-6 chart-container">
+                        <canvas id="automotiveContentChart"></canvas>
+                    </div>
+                </div>
+                <div class="bg-slate-800 rounded-2xl shadow-xl p-6 md:p-8">
+                    <h3 class="text-2xl font-bold text-white">3. Supply Chain Rebalancing</h3>
+                    <p class="mt-2 text-slate-300">Geopolitical strategy is fueling a historic reshoring of manufacturing, with over a trillion dollars in planned global fab investments by 2030.</p>
+                     <div class="mt-6 chart-container">
+                        <canvas id="fabInvestmentChart"></canvas>
+                    </div>
+                </div>
+                 <div class="bg-slate-800 rounded-2xl shadow-xl p-6 md:p-8">
+                     <h3 class="text-2xl font-bold text-white">4. The Advanced Packaging Revolution</h3>
+                    <p class="mt-2 text-slate-300">As Moore's Law slows, integrating specialized "chiplets" via 2.5D/3D packaging is the new performance frontier, creating a booming market.</p>
+                     <div class="mt-6 chart-container">
+                        <canvas id="advancedPackagingChart"></canvas>
+                    </div>
+                </div>
+                 <div class="lg:col-span-2 bg-slate-800 rounded-2xl shadow-xl p-6 md:p-8">
+                     <h3 class="text-2xl font-bold text-center text-white">5. Next Horizons: Neuromorphic & Quantum</h3>
+                    <p class="mt-2 max-w-3xl mx-auto text-center text-slate-300">Looking toward 2030-2040, these nascent paradigms promise to solve problems intractable for classical computers, showing hyper-growth potential from a small base.</p>
+                     <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-8">
+                         <div class="chart-container">
+                             <canvas id="neuromorphicChart"></canvas>
+                         </div>
+                         <div class="chart-container">
+                              <canvas id="quantumChart"></canvas>
+                         </div>
+                     </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="segments">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-white">Deep Dive: Forecasts by Segment</h2>
+            <div class="mt-12 space-y-16">
+                 <div>
+                    <h3 class="text-2xl font-bold text-white text-center">Logic & Manufacturing: The Race to Angstroms</h3>
+                    <p class="mt-2 max-w-3xl mx-auto text-center text-slate-300">The industry's roadmap is defined by relentless innovation in transistor architecture and lithography to enable sub-2nm process nodes.</p>
+                    <div class="timeline max-w-4xl mx-auto mt-8">
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <h4 class="font-bold text-accent">2023-2025: 3nm Node Ramp</h4>
+                                <p class="text-sm text-slate-300">Transition to Gate-All-Around (GAA) transistors begins, succeeding FinFET technology for better power efficiency.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                             <div class="timeline-content">
+                                <h4 class="font-bold text-accent">2025-2027: 2nm Node & High-NA EUV</h4>
+                                <p class="text-sm text-slate-300">Deployment of revolutionary High-NA EUV lithography systems enables patterning for the 2nm process node, a critical inflection point.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <h4 class="font-bold text-accent">Post-2027: The Angstrom Era</h4>
+                                <p class="text-sm text-slate-300">Roadmaps target 1.4nm (A14) and 1nm (A10) nodes, requiring advanced transistor structures like Forks-sheet and CFETs.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-2xl font-bold text-white text-center">EDA & IP: The Open Standard Disruption</h3>
+                    <p class="mt-2 max-w-3xl mx-auto text-center text-slate-300">While the EDA market sees steady growth, the IP market is being fundamentally reshaped by the rise of the open-source RISC-V architecture.</p>
+                    <div class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-12">
+                         <div class="bg-slate-800 rounded-2xl shadow-xl p-6 md:p-8">
+                            <h4 class="text-xl font-bold text-white">EDA Market Growth ($B)</h4>
+                            <p class="text-sm text-slate-400 mb-4">Steady growth driven by increasing chip complexity.</p>
+                            <div class="chart-container">
+                                <canvas id="edaMarketChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="bg-slate-800 rounded-2xl shadow-xl p-6 md:p-8">
+                            <h4 class="text-xl font-bold text-white">RISC-V SoC Revenue Explosion ($B)</h4>
+                            <p class="text-sm text-slate-400 mb-4">Phenomenal CAGR driven by customizability and a royalty-free model.</p>
+                            <div class="chart-container">
+                                <canvas id="riscVMarketChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <h3 class="text-2xl font-bold text-white text-center mb-6">Synthesis of Market Forecasts</h3>
+                    <table class="bg-slate-800 rounded-lg">
+                        <thead>
+                            <tr>
+                                <th>Segment</th>
+                                <th>Forecast Period</th>
+                                <th>Market Size (End of Period)</th>
+                                <th>CAGR (%)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>AI Chips (Overall)</td><td>2025-2030</td><td>$281.6B - $453B</td><td>14.0% - 26.7%</td></tr>
+                            <tr><td>Automotive Semiconductors</td><td>2023-2032</td><td>$123.0B</td><td>6.9%</td></tr>
+                            <tr><td>2.5D/3D IC Packaging</td><td>2024-2034</td><td>$167.6B</td><td>10.7%</td></tr>
+                            <tr><td>EDA Tools</td><td>2025-2032</td><td>$32.9B</td><td>9.4%</td></tr>
+                            <tr><td>Neuromorphic Computing</td><td>2025-2034</td><td>$47.3B</td><td>21.2%</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="geopolitics">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-white">The Geopolitical Chessboard</h2>
+            <div class="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-12">
+                 <div class="lg:col-span-2 bg-slate-800 rounded-2xl shadow-xl p-6 md:p-8">
+                    <h3 class="text-2xl font-bold text-center text-white">The Great Rebalancing: Shifting Global Fab Capacity</h3>
+                    <p class="mt-2 text-center max-w-3xl mx-auto text-slate-300">A historic reshuffling of manufacturing is underway, reversing decades of decline in Western capacity.</p>
+                    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                        <div class="chart-container">
+                             <p class="text-center font-semibold text-slate-200 mb-2">2023 Capacity Share</p>
+                            <canvas id="fabCapacity2023Chart"></canvas>
+                        </div>
+                        <div class="chart-container">
+                            <p class="text-center font-semibold text-slate-200 mb-2">Projected 2032 Capacity Share</p>
+                            <canvas id="fabCapacity2032Chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                 <div class="lg:col-span-2 bg-slate-800 rounded-2xl shadow-xl p-6 md:p-8">
+                    <h3 class="text-2xl font-bold text-white text-center">U.S. CHIPS Act: Seeding a New Ecosystem</h3>
+                    <p class="mt-2 text-slate-300 text-center max-w-3xl mx-auto">Federal funding has catalyzed over $450 billion in private investment, bringing leading-edge logic and packaging back to the U.S.</p>
+                     <div class="mt-6 chart-container">
+                        <canvas id="chipsActFundingChart"></canvas>
+                    </div>
+                </div>
+                 <div class="lg:col-span-2 overflow-x-auto">
+                    <h3 class="text-2xl font-bold text-white text-center mb-6">Global Semiconductor Ecosystem Matrix</h3>
+                    <table class="bg-slate-800 rounded-lg">
+                        <thead>
+                            <tr><th>Company</th><th>Model</th><th>Region</th><th>Focus</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Nvidia</td><td>Fabless</td><td>USA</td><td>AI / Data Center</td></tr>
+                            <tr><td>TSMC</td><td>Foundry</td><td>Taiwan</td><td>Leading-Edge Logic</td></tr>
+                            <tr><td>Intel</td><td>IDM/Foundry</td><td>USA</td><td>PC/Server, Foundry</td></tr>
+                            <tr><td>Samsung</td><td>IDM/Foundry</td><td>S. Korea</td><td>Memory, Foundry</td></tr>
+                            <tr><td>SK Hynix</td><td>IDM</td><td>S. Korea</td><td>Memory, HBM</td></tr>
+                            <tr><td>ASML</td><td>Equipment</td><td>Netherlands</td><td>EUV Lithography</td></tr>
+                            <tr><td>Arm</td><td>IP</td><td>UK</td><td>Mobile & Embedded</td></tr>
+                            <tr><td>Amkor</td><td>OSAT</td><td>USA</td><td>Advanced Packaging</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="talent">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-white">The Human Capital Imperative</h2>
+            <div class="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                 <div class="text-center lg:text-left">
+                    <p class="text-base text-slate-400">Projected Global Shortfall by 2030</p>
+                    <p class="text-7xl lg:text-8xl font-black text-accent tracking-tighter">1 Million+</p>
+                    <p class="text-2xl font-bold text-white mt-1">Skilled Workers Needed</p>
+                    <p class="mt-4 text-slate-300">This deficit threatens to leave new multi-billion-dollar fabs understaffed, putting the entire growth trajectory at risk.</p>
+                </div>
+                 <div class="bg-slate-800 rounded-2xl shadow-xl p-6 md:p-8">
+                     <h3 class="text-2xl font-bold text-white">U.S. Talent Gap Breakdown (~67,000 Jobs)</h3>
+                    <p class="mt-2 text-slate-300">Nearly 60% of new U.S. jobs by 2030 are at risk of being unfilled, spanning all roles.</p>
+                     <div class="mt-6 chart-container max-w-sm mx-auto">
+                        <canvas id="talentShortageChart"></canvas>
+                    </div>
+                </div>
+                 <div class="lg:col-span-2 bg-slate-800 rounded-2xl shadow-xl p-6 md:p-8">
+                    <h3 class="text-2xl font-bold text-white text-center">Strategic Career Pathways for Leadership</h3>
+                    <p class="mt-2 text-slate-300 text-center max-w-3xl mx-auto">For experienced professionals, the combination of technical expertise and business acumen opens high-impact leadership roles.</p>
+                    <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
+                        <div class="p-6 bg-slate-900 rounded-lg border border-slate-700">
+                            <h3 class="font-semibold text-accent">Corporate Strategy & M&A</h3>
+                            <p class="mt-2 text-sm text-slate-300">Bridge technology and finance. Ideal for roles at major firms, investment banks, or VCs.</p>
+                        </div>
+                        <div class="p-6 bg-slate-900 rounded-lg border border-slate-700">
+                            <h3 class="font-semibold text-accent">Advanced Program Leadership</h3>
+                            <p class="mt-2 text-sm text-slate-300">Execute multi-billion dollar projects. Roles like GM or VP of Engineering at high-growth companies.</p>
+                        </div>
+                         <div class="p-6 bg-slate-900 rounded-lg border border-slate-700">
+                            <h3 class="font-semibold text-accent">Operational Leadership</h3>
+                            <p class="mt-2 text-sm text-slate-300">Manage global supply chains and finance. Pathway to COO at mid-size firms or startups.</p>
+                        </div>
+                     </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-900/50 border-t border-slate-700 mt-16 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs text-slate-500">
+             <p>Data synthesized from the "Global Semiconductor Industry Outlook (2025–2040)" report for presentation purposes.</p>
+             <p class="mt-1">Color Palette: Brilliant Blues. Confirmed: No SVG or Mermaid JS used in this visualization.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const CHART_COLORS = {
+                blue: '#00A1E4',
+                darkBlue: '#0077C0',
+                darkerBlue: '#00508C',
+                lightGrey: '#CCCCCC',
+                grey: '#9CA3AF',
+            };
+            
+            const tooltipTitleCallback = (tooltipItems) => {
+                const item = tooltipItems[0];
+                let label = item.chart.data.labels[item.dataIndex];
+                if (Array.isArray(label)) {
+                    return label.join(' ');
+                }
+                return label;
+            };
+            
+            const commonChartOptions = {
+                maintainAspectRatio: false,
+                responsive: true,
+                plugins: {
+                    legend: { labels: { color: CHART_COLORS.lightGrey, font: { size: 12 } } },
+                    tooltip: { callbacks: { title: tooltipTitleCallback }, backgroundColor: '#1E293B', titleColor: '#FFFFFF', bodyColor: '#E2E8F0', borderColor: '#334155', borderWidth: 1 }
+                },
+                scales: {
+                    x: { ticks: { color: CHART_COLORS.grey }, grid: { color: 'rgba(100, 116, 139, 0.2)' } },
+                    y: { ticks: { color: CHART_COLORS.grey }, grid: { color: 'rgba(100, 116, 139, 0.2)' } }
+                }
+            };
+            
+            const wrapLabel = (str, maxLen = 16) => {
+                if (str.length <= maxLen) return str;
+                const words = str.split(' ');
+                const lines = [];
+                let currentLine = '';
+                for (const word of words) {
+                    if ((currentLine + word).length > maxLen && currentLine.length > 0) { lines.push(currentLine.trim()); currentLine = ''; }
+                    currentLine += word + ' ';
+                }
+                lines.push(currentLine.trim());
+                return lines;
+            };
+
+            const marketForecastCtx = document.getElementById('marketForecastChart')?.getContext('2d');
+            if(marketForecastCtx) new Chart(marketForecastCtx, { type: 'line', data: { labels: ['2024', '2030', '2040 (Low)', '2040 (High)'], datasets: [{ label: 'Market Revenue ($B)', data: [627, 1000, 1700, 2400], borderColor: CHART_COLORS.blue, backgroundColor: 'rgba(0, 161, 228, 0.1)', fill: true, tension: 0.4 }] }, options: commonChartOptions });
+            
+            const revenueVsWafersCtx = document.getElementById('revenueVsWafersChart')?.getContext('2d');
+            if(revenueVsWafersCtx) new Chart(revenueVsWafersCtx, { type: 'bar', data: { labels: ['Chip Revenue Growth', 'Wafer Shipment Growth'], datasets: [{ label: '2024 YoY Growth (%)', data: [19, -2.4], backgroundColor: [CHART_COLORS.blue, CHART_COLORS.grey] }] }, options: {...commonChartOptions, indexAxis: 'y' } });
+
+            const aiWaferImpactCtx = document.getElementById('aiWaferImpactChart')?.getContext('2d');
+            if(aiWaferImpactCtx) new Chart(aiWaferImpactCtx, { type: 'doughnut', data: { labels: ['AI Wafer Share', 'Rest of Wafers'], datasets: [{ data: [0.2, 99.8], backgroundColor: [CHART_COLORS.blue, '#334155'], borderWidth: 0 }] }, options: {...commonChartOptions, plugins: {...commonChartOptions.plugins, legend: { display: false }}, cutout: '70%'} });
+
+            const aiChipMarketCtx = document.getElementById('aiChipMarketChart')?.getContext('2d');
+            if(aiChipMarketCtx) new Chart(aiChipMarketCtx, { type: 'bar', data: { labels: ['Forecast 1', 'Forecast 2', 'Forecast 3'], datasets: [{ label: 'AI Chip Market Size by 2030 ($B)', data: [227, 281, 453], backgroundColor: [CHART_COLORS.darkerBlue, CHART_COLORS.darkBlue, CHART_COLORS.blue] }] }, options: commonChartOptions });
+
+            const automotiveContentCtx = document.getElementById('automotiveContentChart')?.getContext('2d');
+            if(automotiveContentCtx) new Chart(automotiveContentCtx, { type: 'bar', data: { labels: ['Traditional ICE', 'Modern EV'], datasets: [{ label: 'Semiconductor Value ($)', data: [500, 2250], backgroundColor: [CHART_COLORS.grey, CHART_COLORS.blue] }] }, options: commonChartOptions });
+            
+            const fabInvestmentCtx = document.getElementById('fabInvestmentChart')?.getContext('2d');
+            if(fabInvestmentCtx) new Chart(fabInvestmentCtx, { type: 'bar', data: { labels: ['U.S.', 'Europe', 'Japan', 'China'], datasets: [{ label: 'Planned Investment by 2030 ($B)', data: [450, 47, 67, 400], backgroundColor: [CHART_COLORS.blue, CHART_COLORS.darkBlue, CHART_COLORS.darkerBlue, CHART_COLORS.grey] }] }, options: {...commonChartOptions, plugins: {...commonChartOptions.plugins, legend: { display: false }}} });
+
+            const advancedPackagingCtx = document.getElementById('advancedPackagingChart')?.getContext('2d');
+            if(advancedPackagingCtx) new Chart(advancedPackagingCtx, { type: 'line', data: { labels: ['2024', '2034'], datasets: [{ label: '2.5D/3D Packaging Market ($B)', data: [60, 170], borderColor: CHART_COLORS.blue, backgroundColor: 'rgba(0, 161, 228, 0.2)', fill: true, tension: 0.4 }] }, options: commonChartOptions });
+            
+            const neuromorphicCtx = document.getElementById('neuromorphicChart')?.getContext('2d');
+            if(neuromorphicCtx) new Chart(neuromorphicCtx, { type: 'bar', data: { labels: ['Neuromorphic Market by 2034 ($B)'], datasets: [{ data: [47.3], backgroundColor: CHART_COLORS.blue }] }, options: {...commonChartOptions, plugins: {...commonChartOptions.plugins, legend: { display: false }}} });
+            
+            const quantumCtx = document.getElementById('quantumChart')?.getContext('2d');
+            if(quantumCtx) new Chart(quantumCtx, { type: 'bar', data: { labels: ['Quantum Market by 2040 (Low)', 'Quantum Market by 2040 (High)'], datasets: [{ data: [45, 130], backgroundColor: [CHART_COLORS.darkBlue, CHART_COLORS.blue] }] }, options: {...commonChartOptions, plugins: {...commonChartOptions.plugins, legend: { display: false }}} });
+
+            const edaMarketCtx = document.getElementById('edaMarketChart')?.getContext('2d');
+            if(edaMarketCtx) new Chart(edaMarketCtx, { type: 'line', data: { labels: ['2025', '2032'], datasets: [{ label: 'EDA Market Revenue ($B)', data: [17.6, 32.9], borderColor: CHART_COLORS.blue, fill: true, backgroundColor: 'rgba(0, 161, 228, 0.2)', tension: 0.1 }] }, options: commonChartOptions });
+            
+            const riscVMarketCtx = document.getElementById('riscVMarketChart')?.getContext('2d');
+            if(riscVMarketCtx) new Chart(riscVMarketCtx, { type: 'line', data: { labels: ['2023', '2030'], datasets: [{ label: 'RISC-V SoC Revenue ($B)', data: [6.1, 92.7], borderColor: CHART_COLORS.blue, fill: true, backgroundColor: 'rgba(0, 161, 228, 0.2)', tension: 0.1 }] }, options: commonChartOptions });
+            
+            const fabCapacity2023Ctx = document.getElementById('fabCapacity2023Chart')?.getContext('2d');
+            if(fabCapacity2023Ctx) new Chart(fabCapacity2023Ctx, { type: 'pie', data: { labels: ['Taiwan', 'S. Korea', 'USA', 'Europe'], datasets: [{ data: [68, 17, 10, 5], backgroundColor: [CHART_COLORS.blue, CHART_COLORS.darkBlue, CHART_COLORS.darkerBlue, CHART_COLORS.grey], borderColor: '#1E293B', borderWidth: 4 }] }, options: {...commonChartOptions, scales: {}} });
+            
+            const fabCapacity2032Ctx = document.getElementById('fabCapacity2032Chart')?.getContext('2d');
+            if(fabCapacity2032Ctx) new Chart(fabCapacity2032Ctx, { type: 'pie', data: { labels: ['Taiwan', 'S. Korea', 'USA', 'Europe', 'Other'], datasets: [{ data: [50, 15, 17, 10, 8], backgroundColor: [CHART_COLORS.blue, CHART_COLORS.darkBlue, CHART_COLORS.darkerBlue, CHART_COLORS.grey, CHART_COLORS.lightGrey], borderColor: '#1E293B', borderWidth: 4 }] }, options: {...commonChartOptions, scales: {}} });
+            
+            const chipsActFundingCtx = document.getElementById('chipsActFundingChart')?.getContext('2d');
+            if(chipsActFundingCtx) new Chart(chipsActFundingCtx, { type: 'bar', data: { labels: ['Intel', 'TSMC', 'Samsung', 'Micron', 'GlobalFoundries'], datasets: [{ label: 'Announced Grants ($B)', data: [8.5, 6.6, 6.4, 6.2, 1.5], backgroundColor: [CHART_COLORS.blue, CHART_COLORS.darkBlue, CHART_COLORS.darkerBlue, CHART_COLORS.blue, CHART_COLORS.darkBlue] }] }, options: commonChartOptions });
+            
+            const talentShortageCtx = document.getElementById('talentShortageChart')?.getContext('2d');
+            if(talentShortageCtx) new Chart(talentShortageCtx, { type: 'doughnut', data: { labels: ['Technicians', 'Engineers & CS', wrapLabel('Master\'s & PhD-level Engineers')], datasets: [{ data: [39, 35, 26], backgroundColor: [CHART_COLORS.blue, CHART_COLORS.darkBlue, CHART_COLORS.darkerBlue], borderColor: '#1E293B', borderWidth: 4 }] }, options: {...commonChartOptions, scales: {}} });
+
+        });
+    </script>
+</body>
+</html>
